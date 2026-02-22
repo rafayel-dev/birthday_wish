@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday, My Jebu 👑</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Nunito:wght@300;400;600;700;900&family=Pacifico&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <!-- ===== LANDING / ENTER SCREEN ===== -->
+    <div id="landing" class="landing-screen">
+        <div class="landing-content">
+            <div class="landing-hearts">
+                <span>💖</span><span>✨</span><span>🌸</span><span>💕</span><span>🌟</span>
+            </div>
+            <h1 class="landing-title">A Special Message<br />Awaits You ✨</h1>
+            <p class="landing-sub">For the most beautiful girl in the world</p>
+            <button id="enterBtn" class="enter-btn">
+                <span class="btn-text">Open Your Gift 🎁</span>
+                <div class="btn-ripple"></div>
+            </button>
+        </div>
+        <canvas id="landingCanvas"></canvas>
+    </div>
+
+    <!-- ===== MAIN BIRTHDAY SITE ===== -->
+    <div id="mainSite" class="main-site hidden">
+
+        <!-- Floating particles canvas -->
+        <canvas id="particleCanvas"></canvas>
+
+        <!-- Balloons -->
+        <div id="balloonContainer" class="balloon-container"></div>
+
+        <!-- Stars -->
+        <div id="starContainer" class="star-container"></div>
+
+        <!-- Audio Control -->
+        <div class="audio-ctrl" id="audioCtrl">
+            <button id="audioBtn" class="audio-btn" title="Toggle Music">
+                <span id="audioIcon">🎵</span>
+            </button>
+            <span class="audio-label">Birthday Song</span>
+        </div>
+        <audio id="bgAudio" src="aud.mp3" loop></audio>
+
+        <!-- ===== HERO SECTION ===== -->
+        <section class="hero-section">
+            <div class="hero-glow-orb orb1"></div>
+            <div class="hero-glow-orb orb2"></div>
+            <div class="hero-glow-orb orb3"></div>
+
+            <div class="hero-content">
+                <div class="crown-emoji float-anim">👑</div>
+                <h1 class="hero-title">
+                    <span class="title-line1">Happy</span>
+                    <span class="title-line2">Birthday</span>
+                    <span class="title-line3">My Jebu</span>
+                </h1>
+                <div class="hero-divider">
+                    <span>💖</span>
+                    <div class="divider-line"></div>
+                    <span>🌸</span>
+                    <div class="divider-line"></div>
+                    <span>💖</span>
+                </div>
+                <p class="hero-subtitle">Today the whole universe celebrates you</p>
+                <div class="scroll-hint bounce-anim">
+                    <span>Scroll to explore ✨</span>
+                    <div class="scroll-arrow">↓</div>
+                </div>
+            </div>
+
+            <!-- Floating emoji ring -->
+            <div class="emoji-ring">
+                <div class="emoji-item" style="--i:0">🌹</div>
+                <div class="emoji-item" style="--i:1">💎</div>
+                <div class="emoji-item" style="--i:2">🌸</div>
+                <div class="emoji-item" style="--i:3">✨</div>
+                <div class="emoji-item" style="--i:4">💕</div>
+                <div class="emoji-item" style="--i:5">🌟</div>
+                <div class="emoji-item" style="--i:6">🦋</div>
+                <div class="emoji-item" style="--i:7">💖</div>
+            </div>
+        </section>
+
+        <!-- ===== CAKE SECTION ===== -->
+        <section class="cake-section">
+            <div class="section-header reveal-item">
+                <span class="section-tag">🎂 Make A Wish</span>
+                <h2 class="section-title">Blow Out Your Candles</h2>
+            </div>
+
+            <div class="cake-wrapper reveal-item">
+                <div class="cake-scene">
+                    <!-- Candles -->
+                    <div class="candles-row">
+                        <div class="candle c1">
+                            <div class="flame">
+                                <div class="flame-inner"></div>
+                            </div>
+                        </div>
+                        <div class="candle c2">
+                            <div class="flame">
+                                <div class="flame-inner"></div>
+                            </div>
+                        </div>
+                        <div class="candle c3">
+                            <div class="flame">
+                                <div class="flame-inner"></div>
+                            </div>
+                        </div>
+                        <div class="candle c4">
+                            <div class="flame">
+                                <div class="flame-inner"></div>
+                            </div>
+                        </div>
+                        <div class="candle c5">
+                            <div class="flame">
+                                <div class="flame-inner"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Cake layers -->
+                    <div class="cake-top-layer">
+                        <div class="cake-deco">🌸 🎀 🌸</div>
+                    </div>
+                    <div class="cake-mid-layer">
+                        <div class="cake-stripe"></div>
+                    </div>
+                    <div class="cake-bot-layer">
+                        <div class="cake-bottom-deco">💕 Happy Birthday 💕</div>
+                    </div>
+                    <div class="cake-plate"></div>
+                </div>
+
+                <button class="blow-btn" id="blowBtn">
+                    🎉 Tap to Blow Candles!
+                </button>
+                <div class="wish-text hidden" id="wishText">
+                    🌟 Your Wish Has Been Made! May All Your Dreams Come True! 🌟
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== LOVE MESSAGE SECTION ===== -->
+        <section class="message-section">
+            <div class="msg-bg-overlay"></div>
+            <div class="message-container">
+                <div class="letter-wrapper reveal-item">
+                    <div class="letter-top">
+                        <span>💌</span>
+                        <h2>A Letter From My Heart</h2>
+                        <span>💌</span>
+                    </div>
+                    <div class="letter-body">
+                        <p class="letter-greeting">My Dearest Jebin,</p>
+                        <p class="letter-text">
+                            On this magical day that the universe gifted to the world,
+                            I want you to know that you are the most precious,
+                            breathtaking, and extraordinary person I have ever known. 💖
+                        </p>
+                        <p class="letter-text">
+                            Your smile lights up every room, your laugh is the most
+                            beautiful melody I've ever heard, and your heart — oh, your heart —
+                            is pure gold. You deserve every flower, every star,
+                            every moment of joy this world has to offer. 🌸✨
+                        </p>
+                        <p class="letter-text">
+                            Today is YOUR day. The day the stars aligned and you came into this world,
+                            making everything brighter, warmer, and infinitely more beautiful.
+                            I am endlessly grateful to have you in my life. 🌹
+                        </p>
+                        <p class="letter-text">
+                            May this birthday be as magical, radiant, and wonderful as you are.
+                            May all your wishes come true. May every dream bloom into reality.
+                            You're not just loved — you are <em>adored</em>. 💕
+                        </p>
+                        <p class="letter-sign">
+                            Forever yours, with every heartbeat 💗<br />
+                            <span class="sign-name">Your Hubby Rafu ✨</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== MEMORY / PHOTO GALLERY SECTION ===== -->
+        <section class="memories-section">
+            <div class="section-header reveal-item">
+                <span class="section-tag">🌸 Our Story</span>
+                <h2 class="section-title">Reasons I Love You</h2>
+            </div>
+            <div class="reasons-grid">
+                <div class="reason-card reveal-item" data-delay="0">
+                    <div class="reason-icon">😊</div>
+                    <h3>Your Smile</h3>
+                    <p>That smile of yours can turn the darkest day into pure sunshine</p>
+                </div>
+                <div class="reason-card reveal-item" data-delay="100">
+                    <div class="reason-icon">💪</div>
+                    <h3>Your Strength</h3>
+                    <p>You face every challenge with grace and courage that inspires me daily</p>
+                </div>
+                <div class="reason-card reveal-item" data-delay="200">
+                    <div class="reason-icon">💡</div>
+                    <h3>Your Mind</h3>
+                    <p>Your intelligence and creativity leave me in awe every single day</p>
+                </div>
+                <div class="reason-card reveal-item" data-delay="300">
+                    <div class="reason-icon">🤗</div>
+                    <h3>Your Warmth</h3>
+                    <p>Your kindness and warmth make everyone around you feel so loved</p>
+                </div>
+                <div class="reason-card reveal-item" data-delay="400">
+                    <div class="reason-icon">🌟</div>
+                    <h3>Your Magic</h3>
+                    <p>You have this magical aura that makes the world feel more beautiful</p>
+                </div>
+                <div class="reason-card reveal-item" data-delay="500">
+                    <div class="reason-icon">💖</div>
+                    <h3>Your Heart</h3>
+                    <p>Your pure, loving heart is the most beautiful thing I have ever seen</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== WISHES SECTION ===== -->
+        <section class="wishes-section">
+            <div class="section-header reveal-item">
+                <span class="section-tag">🎁 Birthday Wishes</span>
+                <h2 class="section-title">My Wishes For You</h2>
+            </div>
+            <div class="wishes-timeline">
+                <div class="wish-item reveal-item" data-delay="0">
+                    <div class="wish-dot">🌹</div>
+                    <div class="wish-card">
+                        <h3>Infinite Happiness</h3>
+                        <p>May your life be overflowing with joy, laughter, and moments that take your breath away</p>
+                    </div>
+                </div>
+                <div class="wish-item reveal-item" data-delay="150">
+                    <div class="wish-dot">⭐</div>
+                    <div class="wish-card">
+                        <h3>All Your Dreams</h3>
+                        <p>May every dream you've ever held close to your heart bloom into your most beautiful reality
+                        </p>
+                    </div>
+                </div>
+                <div class="wish-item reveal-item" data-delay="300">
+                    <div class="wish-dot">💎</div>
+                    <div class="wish-card">
+                        <h3>Perfect Health</h3>
+                        <p>May you be blessed with boundless energy, glowing health, and a long, beautiful life</p>
+                    </div>
+                </div>
+                <div class="wish-item reveal-item" data-delay="450">
+                    <div class="wish-dot">🦋</div>
+                    <div class="wish-card">
+                        <h3>Endless Love</h3>
+                        <p>May you always be surrounded by people who cherish and celebrate every part of you</p>
+                    </div>
+                </div>
+                <div class="wish-item reveal-item" data-delay="600">
+                    <div class="wish-dot">🌸</div>
+                    <div class="wish-card">
+                        <h3>Pure Magic</h3>
+                        <p>May this year bring you magic, adventure, and moments you'll treasure forever</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== FIREWORKS FINALE SECTION ===== -->
+        <section class="finale-section">
+            <canvas id="fireworksCanvas"></canvas>
+            <div class="finale-content">
+                <div class="finale-emoji">🎊🥳🎊</div>
+                <h2 class="finale-title">Happy Birthday!</h2>
+                <p class="finale-sub">You deserve all of this and SO much more</p>
+                <div class="big-heart-pulse">💖</div>
+                <p class="finale-sign">— With all my love, always & forever 🌹</p>
+                <button class="replay-btn" id="replayBtn">
+                    🔁 Replay Magic
+                </button>
+            </div>
+        </section>
+
+        <!-- ===== FOOTER ===== -->
+        <footer class="site-footer">
+            <p>Made with 💖 especially for you, My Love 👑</p>
+            <p class="footer-sub">✨ Every pixel crafted with love ✨</p>
+        </footer>
+
+    </div><!-- end #mainSite -->
+
+    <script src="app.js"></script>
+</body>
+
+</html>
