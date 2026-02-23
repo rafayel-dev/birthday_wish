@@ -135,6 +135,36 @@ body {
     filter: drop-shadow(0 0 30px rgba(255, 110, 180, 0.5));
 }
 
+/* ── Emoji inside gradient/clip-text parents ── */
+/* Resets the parent's -webkit-text-fill-color:transparent & font so emoji
+   renders natively through the OS emoji font rather than becoming a pink blob */
+.emoji-bare {
+    font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+    -webkit-text-fill-color: initial;
+    /* override transparent fill */
+    background: none;
+    /* remove gradient clip */
+    background-clip: initial;
+    -webkit-background-clip: initial;
+    filter: none;
+    /* remove drop-shadow that distorts emoji */
+    display: inline-block;
+    font-style: normal;
+}
+
+/* ── Sparkle lives OUTSIDE the h1 gradient — renders correctly ── */
+.landing-sparkle-emoji {
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    margin-top: -0.6rem;
+    margin-bottom: 0.6rem;
+    line-height: 1;
+    display: block;
+    text-align: center;
+    animation: heartBeat 2s ease-in-out infinite;
+}
+
+
+
 @keyframes gradientShift {
     0% {
         background-position: 0% 50%;
@@ -374,8 +404,71 @@ body {
     background: radial-gradient(ellipse at 50% 60%, #1f0040 0%, #0d0219 70%);
 }
 
-.hero-glow-orb {
+/* ── Parallax wrapper layers (JS moves these, not the animated inner elements) ── */
+.px-layer {
     position: absolute;
+    will-change: transform;
+    /* No transition! RAF lerp handles smoothness */
+}
+
+/* Each wrapper sits exactly where the orb used to be */
+.px-orb1 {
+    width: 400px;
+    height: 400px;
+    top: -100px;
+    left: -100px;
+}
+
+.px-orb2 {
+    width: 350px;
+    height: 350px;
+    top: 50%;
+    right: -80px;
+}
+
+.px-orb3 {
+    width: 300px;
+    height: 300px;
+    bottom: -80px;
+    left: 30%;
+}
+
+/* Emoji ring wrapper: covers the full hero and centers the ring inside */
+.px-ring {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Hero content and star container — JS can target directly (no active infinite transform anim) */
+.px-hero-content,
+.star-container,
+.parallax-float {
+    will-change: transform;
+}
+
+/* ── Scroll progress bar ── */
+.scroll-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, #ff2d78, #a855f7, #ffd700, #00e5ff);
+    background-size: 300%;
+    animation: gradientShift 3s ease infinite;
+    z-index: 99999;
+    box-shadow: 0 0 8px rgba(255, 45, 120, 0.8), 0 0 16px rgba(168, 85, 247, 0.5);
+}
+
+
+.hero-glow-orb {
+    position: relative;
+    /* inner orb is now relative inside its wrapper */
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
     filter: blur(80px);
     opacity: 0.4;
@@ -383,41 +476,32 @@ body {
 }
 
 .orb1 {
-    width: 400px;
-    height: 400px;
     background: radial-gradient(circle, #ff2d78 0%, transparent 70%);
-    top: -100px;
-    left: -100px;
     animation-delay: 0s;
 }
 
 .orb2 {
-    width: 350px;
-    height: 350px;
     background: radial-gradient(circle, #a855f7 0%, transparent 70%);
-    top: 50%;
-    right: -80px;
     animation-delay: 2s;
 }
 
 .orb3 {
-    width: 300px;
-    height: 300px;
     background: radial-gradient(circle, #00e5ff 0%, transparent 70%);
-    bottom: -80px;
-    left: 30%;
     animation-delay: 4s;
 }
 
+/* orbFloat now only animates opacity — transform stays free for JS parallax on the wrapper */
 @keyframes orbFloat {
 
     0%,
     100% {
-        transform: translate(0, 0) scale(1);
+        opacity: 0.35;
+        filter: blur(80px);
     }
 
     50% {
-        transform: translate(20px, -20px) scale(1.05);
+        opacity: 0.55;
+        filter: blur(90px);
     }
 }
 
@@ -531,6 +615,7 @@ body {
     color: rgba(255, 255, 255, 0.75);
     letter-spacing: 0.05em;
     animation: fadeInDown 1s ease 1s both;
+    z-index: 99999;
 }
 
 .scroll-hint {
@@ -649,12 +734,221 @@ section {
 }
 
 /* ===================================
+/* ===================================
+   PHOTO PARALLAX SECTION
+   =================================== */
+.photo-parallax-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 5;
+}
+
+/* The photo as a parallax background layer — JS controls translateY */
+.photo-parallax-bg {
+    position: absolute;
+    inset: -30%;
+    /* oversized so parallax movement never shows edges */
+    background-image: url('parallax.jpg');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    will-change: transform;
+    z-index: 0;
+    filter: brightness(0.35) saturate(1.2);
+    /* dim photo so card pops */
+}
+
+/* Gradient overlays for depth — top and bottom fade into page color */
+.photo-parallax-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+        linear-gradient(to bottom,
+            #0d0219 0%,
+            transparent 20%,
+            transparent 80%,
+            #0d0219 100%),
+        radial-gradient(ellipse at center, transparent 30%, rgba(13, 2, 25, 0.6) 100%);
+    pointer-events: none;
+}
+
+/* Floating hearts drifting up the background */
+.photo-hearts {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.ph-heart {
+    position: absolute;
+    bottom: -10%;
+    left: var(--x);
+    font-size: calc(1.2rem * var(--s));
+    animation: photoHeartRise 6s ease-in infinite;
+    animation-delay: var(--d);
+    opacity: 0;
+}
+
+@keyframes photoHeartRise {
+    0% {
+        transform: translateY(0) scale(0.8);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.9;
+    }
+
+    80% {
+        opacity: 0.4;
+    }
+
+    100% {
+        transform: translateY(-110vh) scale(1.1);
+        opacity: 0;
+    }
+}
+
+/* ── Portrait card ── */
+.photo-card {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem;
+}
+
+/* Glowing aura behind the card */
+.photo-card-glow {
+    position: absolute;
+    width: 340px;
+    height: 340px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 45, 120, 0.4) 0%, rgba(168, 85, 247, 0.3) 50%, transparent 75%);
+    filter: blur(40px);
+    animation: photoGlowPulse 3s ease-in-out infinite;
+    z-index: 0;
+    pointer-events: none;
+}
+
+@keyframes photoGlowPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: scale(1.15);
+        opacity: 1;
+    }
+}
+
+/* Rotating rainbow gradient border */
+.photo-card-border {
+    position: relative;
+    width: 260px;
+    height: 320px;
+    border-radius: 30px;
+    padding: 4px;
+    background: linear-gradient(var(--border-angle, 0deg),
+            #ffd700, #ff6eb4, #a855f7, #00e5ff, #ff2d78, #ffd700);
+    background-size: 300%;
+    animation: borderRotate 3s linear infinite, gradientShift 4s ease infinite;
+    z-index: 1;
+    box-shadow:
+        0 0 30px rgba(255, 45, 120, 0.5),
+        0 0 60px rgba(168, 85, 247, 0.3),
+        0 0 100px rgba(255, 215, 0, 0.15);
+}
+
+@property --border-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@keyframes borderRotate {
+    to {
+        --border-angle: 360deg;
+    }
+}
+
+.photo-portrait {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 27px;
+    display: block;
+}
+
+/* Caption below photo */
+.photo-caption {
+    text-align: center;
+    z-index: 1;
+    animation: fadeInDown 1s ease 0.3s both;
+}
+
+.photo-heart-icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 0.4rem;
+    animation: heartBeat 1.5s ease-in-out infinite;
+}
+
+.photo-name {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(2.5rem, 7vw, 4rem);
+    background: linear-gradient(135deg, #ffd700, #ff6eb4, #a855f7);
+    background-size: 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 3s ease infinite;
+    line-height: 1.2;
+    padding-bottom: 0.1em;
+}
+
+.photo-tagline {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 0.05em;
+    margin-top: 0.3rem;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .photo-card-border {
+        width: 200px;
+        height: 250px;
+    }
+
+    .photo-card-glow {
+        width: 240px;
+        height: 240px;
+    }
+}
+
+/* ===================================
    CAKE SECTION
    =================================== */
 .cake-section {
     background: linear-gradient(180deg, #0d0219 0%, #1a0533 50%, #0d0219 100%);
     text-align: center;
 }
+
 
 .cake-wrapper {
     display: flex;

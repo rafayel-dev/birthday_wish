@@ -3,31 +3,31 @@
    ============================================= */
 
 // ─── DOM REFS ────────────────────────────────
-const landing      = document.getElementById('landing');
-const mainSite     = document.getElementById('mainSite');
-const enterBtn     = document.getElementById('enterBtn');
-const bgAudio      = document.getElementById('bgAudio');
-const audioBtn     = document.getElementById('audioBtn');
-const audioIcon    = document.getElementById('audioIcon');
-const blowBtn      = document.getElementById('blowBtn');
-const wishText     = document.getElementById('wishText');
-const replayBtn    = document.getElementById('replayBtn');
-const balloonCont  = document.getElementById('balloonContainer');
-const starCont     = document.getElementById('starContainer');
+const landing = document.getElementById('landing');
+const mainSite = document.getElementById('mainSite');
+const enterBtn = document.getElementById('enterBtn');
+const bgAudio = document.getElementById('bgAudio');
+const audioBtn = document.getElementById('audioBtn');
+const audioIcon = document.getElementById('audioIcon');
+const blowBtn = document.getElementById('blowBtn');
+const wishText = document.getElementById('wishText');
+const replayBtn = document.getElementById('replayBtn');
+const balloonCont = document.getElementById('balloonContainer');
+const starCont = document.getElementById('starContainer');
 
 // ─── LANDING CANVAS SPARKLES ─────────────────
 const lCanvas = document.getElementById('landingCanvas');
-const lCtx    = lCanvas.getContext('2d');
+const lCtx = lCanvas.getContext('2d');
 
 function resizeLanding() {
-  lCanvas.width  = window.innerWidth;
+  lCanvas.width = window.innerWidth;
   lCanvas.height = window.innerHeight;
 }
 resizeLanding();
 window.addEventListener('resize', resizeLanding);
 
 const landingParticles = [];
-const LANDING_COLORS = ['#ffd700','#ff6eb4','#a855f7','#00e5ff','#fb7185','#ff2d78'];
+const LANDING_COLORS = ['#ffd700', '#ff6eb4', '#a855f7', '#00e5ff', '#fb7185', '#ff2d78'];
 
 for (let i = 0; i < 120; i++) {
   landingParticles.push({
@@ -69,7 +69,7 @@ animateLanding();
 enterBtn.addEventListener('click', () => {
   landing.classList.add('fade-out');
   bgAudio.volume = 0.45;
-  bgAudio.play().catch(() => {});
+  bgAudio.play().catch(() => { });
   audioIcon.textContent = '🔊';
   setTimeout(() => {
     landing.classList.add('hidden');
@@ -98,6 +98,7 @@ function initMainSite() {
   initParticleCanvas();
   initScrollReveal();
   initFireworks();
+  initParallax(); // ← professional parallax system
 }
 
 
@@ -146,7 +147,7 @@ function spawnBalloon() {
   b.classList.add('balloon');
   const left = Math.random() * 100;
   const drift = (Math.random() - 0.5) * 150;
-  const dur   = Math.random() * 10 + 12;
+  const dur = Math.random() * 10 + 12;
   const delay = Math.random() * 5;
   const color = BALLOON_COLORS[Math.floor(Math.random() * BALLOON_COLORS.length)];
   b.style.cssText = `
@@ -167,15 +168,15 @@ function spawnBalloon() {
 
 // ─── PARTICLE CANVAS ─────────────────────────
 const pCanvas = document.getElementById('particleCanvas');
-const pCtx    = pCanvas.getContext('2d');
+const pCtx = pCanvas.getContext('2d');
 
 function resizeParticle() {
-  pCanvas.width  = window.innerWidth;
+  pCanvas.width = window.innerWidth;
   pCanvas.height = window.innerHeight;
 }
 
-const hearts   = ['💖','💕','💗','💓','🌸','✨','⭐','🌟'];
-let floaters   = [];
+const hearts = ['💖', '💕', '💗', '💓', '🌸', '✨', '⭐', '🌟'];
+let floaters = [];
 
 function initParticleCanvas() {
   resizeParticle();
@@ -249,7 +250,7 @@ blowBtn.addEventListener('click', () => {
   candlesBlown = true;
 
   blowBtn.style.transform = 'scale(0.95)';
-  blowBtn.style.opacity   = '0.6';
+  blowBtn.style.opacity = '0.6';
   blowBtn.disabled = true;
 
   const flames = document.querySelectorAll('.flame');
@@ -271,7 +272,7 @@ blowBtn.addEventListener('click', () => {
 
 // ─── CONFETTI EXPLOSION ──────────────────────
 function launchConfettiExplosion() {
-  const colors = ['#ffd700','#ff6eb4','#a855f7','#00e5ff','#fb7185','#ff2d78','#34d399','#fbbf24'];
+  const colors = ['#ffd700', '#ff6eb4', '#a855f7', '#00e5ff', '#fb7185', '#ff2d78', '#34d399', '#fbbf24'];
   for (let i = 0; i < 120; i++) {
     setTimeout(() => createConfettiPiece(colors), Math.random() * 1000);
   }
@@ -279,13 +280,13 @@ function launchConfettiExplosion() {
 
 function createConfettiPiece(colors) {
   const piece = document.createElement('div');
-  const size  = Math.random() * 12 + 6;
+  const size = Math.random() * 12 + 6;
   const color = colors[Math.floor(Math.random() * colors.length)];
   const startX = window.innerWidth / 2 + (Math.random() - 0.5) * 200;
-  const velX   = (Math.random() - 0.5) * 600;
-  const velY   = -(Math.random() * 500 + 200);
-  const rot    = Math.random() * 720;
-  const shape  = Math.random() > 0.5 ? '50%' : '0';
+  const velX = (Math.random() - 0.5) * 600;
+  const velY = -(Math.random() * 500 + 200);
+  const rot = Math.random() * 720;
+  const shape = Math.random() > 0.5 ? '50%' : '0';
 
   piece.style.cssText = `
     position: fixed;
@@ -302,7 +303,7 @@ function createConfettiPiece(colors) {
   document.body.appendChild(piece);
 
   const duration = Math.random() * 1200 + 1000;
-  const gravity  = 1200;
+  const gravity = 1200;
 
   piece.animate([
     { transform: 'translate(0,0) rotate(0deg)', opacity: 1 },
@@ -318,29 +319,29 @@ function createConfettiPiece(colors) {
 
 // ─── FIREWORKS ───────────────────────────────
 const fCanvas = document.getElementById('fireworksCanvas');
-const fCtx    = fCanvas.getContext('2d');
+const fCtx = fCanvas.getContext('2d');
 let fireworksRunning = false;
 let fireworksTimer;
 
 function resizeFireworks() {
-  fCanvas.width  = fCanvas.offsetWidth;
+  fCanvas.width = fCanvas.offsetWidth;
   fCanvas.height = fCanvas.offsetHeight;
 }
 
-const fireworks  = [];
-const sparkles   = [];
+const fireworks = [];
+const sparkles = [];
 
 class Firework {
   constructor() { this.reset(); }
   reset() {
-    this.x   = Math.random() * fCanvas.width;
-    this.y   = fCanvas.height;
-    this.tx  = Math.random() * fCanvas.width * 0.6 + fCanvas.width * 0.2;
-    this.ty  = Math.random() * fCanvas.height * 0.5 + 50;
+    this.x = Math.random() * fCanvas.width;
+    this.y = fCanvas.height;
+    this.tx = Math.random() * fCanvas.width * 0.6 + fCanvas.width * 0.2;
+    this.ty = Math.random() * fCanvas.height * 0.5 + 50;
     this.speed = Math.random() * 3 + 4;
     this.angle = Math.atan2(this.ty - this.y, this.tx - this.x);
-    this.vx  = Math.cos(this.angle) * this.speed;
-    this.vy  = Math.sin(this.angle) * this.speed;
+    this.vx = Math.cos(this.angle) * this.speed;
+    this.vy = Math.sin(this.angle) * this.speed;
     this.color = `hsl(${Math.random() * 360}, 100%, 65%)`;
     this.trail = [];
     this.exploded = false;
@@ -376,23 +377,23 @@ class Firework {
 
 class Sparkle {
   constructor(x, y, color) {
-    this.x     = x; this.y = y;
+    this.x = x; this.y = y;
     this.color = color;
     const angle = (Math.random() * Math.PI * 2);
     const speed = Math.random() * 6 + 2;
-    this.vx    = Math.cos(angle) * speed;
-    this.vy    = Math.sin(angle) * speed;
+    this.vx = Math.cos(angle) * speed;
+    this.vy = Math.sin(angle) * speed;
     this.alpha = 1;
     this.gravity = 0.12;
-    this.r     = Math.random() * 3 + 1;
+    this.r = Math.random() * 3 + 1;
     this.decay = Math.random() * 0.015 + 0.012;
   }
   update() {
-    this.vy    += this.gravity;
-    this.x     += this.vx;
-    this.y     += this.vy;
+    this.vy += this.gravity;
+    this.x += this.vx;
+    this.y += this.vy;
     this.alpha -= this.decay;
-    this.vx    *= 0.98;
+    this.vx *= 0.98;
   }
   draw() {
     fCtx.beginPath();
@@ -464,7 +465,7 @@ replayBtn.addEventListener('click', () => {
   blowBtn.disabled = false;
   blowBtn.classList.remove('hidden');
   blowBtn.style.transform = '';
-  blowBtn.style.opacity   = '1';
+  blowBtn.style.opacity = '1';
   wishText.classList.add('hidden');
 
   // Re-trigger reveal items
@@ -478,7 +479,7 @@ replayBtn.addEventListener('click', () => {
 // ─── CLICK SPARKLE EFFECT ────────────────────
 document.addEventListener('click', (e) => {
   if (!mainSite.classList.contains('hidden')) {
-    const emojis = ['💖','✨','🌸','⭐','💕','🌟','💎','🦋'];
+    const emojis = ['💖', '✨', '🌸', '⭐', '💕', '🌟', '💎', '🦋'];
     for (let i = 0; i < 6; i++) {
       const el = document.createElement('div');
       el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
@@ -493,7 +494,7 @@ document.addEventListener('click', (e) => {
       `;
       document.body.appendChild(el);
       const angle = (Math.random() * 360 * Math.PI) / 180;
-      const dist  = Math.random() * 80 + 40;
+      const dist = Math.random() * 80 + 40;
       el.animate([
         { transform: 'translate(-50%,-50%) scale(0)', opacity: 1 },
         { transform: `translate(calc(-50% + ${Math.cos(angle) * dist}px), calc(-50% + ${Math.sin(angle) * dist}px)) scale(1.3)`, opacity: 1, offset: 0.5 },
@@ -503,3 +504,171 @@ document.addEventListener('click', (e) => {
     }
   }
 });
+
+
+
+// ════════════════════════════════════════════════════════════════
+//  ✨ PARALLAX ENGINE v3 — Simple, Strong, Impossible to Miss ✨
+//
+//  Strategy:
+//  • Orb wrappers: use top/left CSS (not transform) — zero animation conflict
+//  • Hero content: translateY + opacity fade
+//  • Section titles: obvious translateY (±40px range)
+//  • Reason cards: staggered depth (each moves at slightly different speed)
+//  • Wish items: staggered depth
+//  • Cake + letter card: viewport-center-relative float
+//  • Mouse: orbs tilt left/right (clearly visible horizontal drift)
+//  • Scroll bar: rainbow progress across top
+// ════════════════════════════════════════════════════════════════
+function initParallax() {
+
+  // ── Helpers ──────────────────────────────────────────────────
+  const $ = sel => document.querySelector(sel);
+  const $$ = sel => document.querySelectorAll(sel);
+  const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
+  const isMobile = () => window.innerWidth < 768;
+
+  // ── Elements ─────────────────────────────────────────────────
+  const scrollBar = $('#scrollBar');
+  const pxOrb1 = $('.px-orb1');
+  const pxOrb2 = $('.px-orb2');
+  const pxOrb3 = $('.px-orb3');
+  const pxRing = $('.px-ring');
+  const heroEl = $('.px-hero-content');
+  const starEl = $('.star-container');
+  const photoBg = $('#photoBg');              // photo parallax background
+  const sectionTitles = $$('.section-title');
+  const reasonCards = $$('.reason-card');
+  const wishItems = $$('.wish-item');
+  const floatEls = $$('.parallax-float');  // cake-scene + letter-wrapper
+
+  // Store base top values for orbs (set from CSS via getComputedStyle)
+  // We'll adjust top directly — zero conflict with orbFloat CSS animation
+  let orb1BaseTop, orb2BaseTop, orb3BaseTop;
+
+  // ── Mouse tilt ───────────────────────────────────────────────
+  let mouseX = 0, mouseY = 0;   // smoothed
+  let rawMX = 0, rawMY = 0;
+  document.addEventListener('mousemove', e => {
+    rawMX = (e.clientX / window.innerWidth - 0.5) * 2;  // -1..1
+    rawMY = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  // ── Hero content: wait for entrance animation to finish ──────
+  let heroReady = false;
+  let heroScrollY = 0;
+  setTimeout(() => { heroReady = true; }, 1500);
+
+  // ── Collect orb base positions once ─────────────────────────
+  function captureOrbBases() {
+    if (pxOrb1) orb1BaseTop = pxOrb1.offsetTop;
+    if (pxOrb2) orb2BaseTop = pxOrb2.offsetTop;
+    if (pxOrb3) orb3BaseTop = pxOrb3.offsetTop;
+  }
+  captureOrbBases();
+
+  // ── Main scroll + rAF loop ───────────────────────────────────
+  function tick() {
+    const sy = window.scrollY;
+    const vh = window.innerHeight;
+
+    // Progress bar
+    if (scrollBar) {
+      const max = document.documentElement.scrollHeight - vh;
+      scrollBar.style.width = (max > 0 ? (sy / max) * 100 : 0) + '%';
+    }
+
+    // Smooth mouse
+    mouseX += (rawMX - mouseX) * 0.06;
+    mouseY += (rawMY - mouseY) * 0.06;
+
+    const mob = isMobile();
+
+    // ── 1. ORB WRAPPERS — top + left offset (no transform conflict!) ──
+    if (!mob) {
+      if (pxOrb1) {
+        pxOrb1.style.transform = `translate3d(${mouseX * 30}px,  ${sy * 0.40}px, 0)`;
+      }
+      if (pxOrb2) {
+        pxOrb2.style.transform = `translate3d(${mouseX * -40}px, ${-sy * 0.30}px, 0)`;
+      }
+      if (pxOrb3) {
+        pxOrb3.style.transform = `translate3d(${mouseX * 20}px,  ${sy * 0.20}px, 0)`;
+      }
+      if (pxRing) {
+        pxRing.style.transform = `translate3d(${mouseX * 8}px, ${-sy * 0.08}px, 0)`;
+      }
+    }
+
+    // ── 2. STAR BACKGROUND — very slow drift (deep space feel) ──
+    if (starEl) {
+      starEl.style.transform = `translate3d(0, ${sy * 0.05}px, 0)`;
+    }
+
+    // ── 3. HERO CONTENT — lift & fade on scroll ──────────────────
+    if (heroEl && heroReady) {
+      const fade = clamp(1 - sy / (vh * 0.65), 0, 1);
+      heroEl.style.transform = `translate3d(0, ${sy * 0.20}px, 0)`;
+      heroEl.style.opacity = fade;
+    }
+
+    // ── 3b. PHOTO SECTION BG — classic parallax (bg moves slower than scroll) ──
+    if (photoBg) {
+      const pSection = photoBg.closest('section');
+      if (pSection) {
+        const pr = pSection.getBoundingClientRect();
+        if (pr.bottom > 0 && pr.top < vh) {
+          // How far into the section we are (0 = top, 1 = bottom)
+          const progress = (vh - pr.top) / (vh + pr.height);
+          // Shift bg by 35% of scroll — clearly visible parallax depth
+          const offset = (progress - 0.5) * pr.height * 0.35;
+          photoBg.style.transform = `translate3d(0, ${offset.toFixed(1)}px, 0)`;
+        }
+      }
+    }
+
+    // ── 4. SECTION TITLES — clear visible offset (±40px range) ──
+    sectionTitles.forEach((el, i) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.bottom < -100 || rect.top > vh + 100) return;
+      // Distance of element center from viewport center
+      const fromCenter = (rect.top + rect.height / 2) - vh / 2;
+      const speed = 0.18 + (i % 2) * 0.08;   // alternating speeds for variety
+      el.style.transform = `translateY(${fromCenter * speed * -0.4}px)`;
+    });
+
+    // ── 5. REASON CARDS — staggered depth parallax ───────────────
+    reasonCards.forEach((el, i) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.bottom < -100 || rect.top > vh + 100) return;
+      const fromCenter = (rect.top + rect.height / 2) - vh / 2;
+      // Each card gets a slightly different speed creating staggered depth
+      const speed = [0.06, 0.10, 0.14, 0.08, 0.12, 0.07][i % 6];
+      el.style.transform = `translateY(${fromCenter * speed * -0.5}px)`;
+    });
+
+    // ── 6. WISH ITEMS — alternating drift direction ──────────────
+    wishItems.forEach((el, i) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.bottom < -100 || rect.top > vh + 100) return;
+      const fromCenter = (rect.top + rect.height / 2) - vh / 2;
+      const dir = i % 2 === 0 ? 1 : -1;  // alternating left/right lean
+      el.style.transform = `translateY(${fromCenter * 0.08 * -0.5}px) translateX(${fromCenter * 0.03 * dir}px)`;
+    });
+
+    // ── 7. FLOAT ELEMENTS (cake + letter card) — depth bob ───────
+    floatEls.forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.bottom < -100 || rect.top > vh + 100) return;
+      const fromCenter = (rect.top + rect.height / 2) - vh / 2;
+      el.style.transform = `translateY(${fromCenter * 0.10 * -0.4}px)`;
+    });
+
+    requestAnimationFrame(tick);
+  }
+
+  tick();
+}
+
+
+

@@ -15,13 +15,18 @@
 
 <body>
 
+
+    <!-- ===== SCROLL PROGRESS BAR ===== -->
+    <div class="scroll-progress-bar" id="scrollBar"></div>
+
     <!-- ===== LANDING / ENTER SCREEN ===== -->
     <div id="landing" class="landing-screen">
         <div class="landing-content">
             <div class="landing-hearts">
                 <span>💖</span><span>✨</span><span>🌸</span><span>💕</span><span>🌟</span>
             </div>
-            <h1 class="landing-title">A Special Message<br />Awaits You ✨</h1>
+            <h1 class="landing-title">A Special Message<br />Awaits You</h1>
+            <div class="landing-sparkle-emoji">✨</div>
             <p class="landing-sub">For the most beautiful girl in the world</p>
             <button id="enterBtn" class="enter-btn">
                 <span class="btn-text">Open Your Gift 🎁</span>
@@ -54,11 +59,18 @@
 
         <!-- ===== HERO SECTION ===== -->
         <section class="hero-section">
-            <div class="hero-glow-orb orb1"></div>
-            <div class="hero-glow-orb orb2"></div>
-            <div class="hero-glow-orb orb3"></div>
+            <!-- Orb wrappers: JS parallax on wrapper, CSS animation on inner orb -->
+            <div class="px-layer px-orb1">
+                <div class="hero-glow-orb orb1"></div>
+            </div>
+            <div class="px-layer px-orb2">
+                <div class="hero-glow-orb orb2"></div>
+            </div>
+            <div class="px-layer px-orb3">
+                <div class="hero-glow-orb orb3"></div>
+            </div>
 
-            <div class="hero-content">
+            <div class="hero-content px-hero-content">
                 <div class="crown-emoji float-anim">👑</div>
                 <h1 class="hero-title">
                     <span class="title-line1">Happy</span>
@@ -79,20 +91,55 @@
                 </div>
             </div>
 
-            <!-- Floating emoji ring -->
-            <div class="emoji-ring">
-                <div class="emoji-item" style="--i:0">🌹</div>
-                <div class="emoji-item" style="--i:1">💎</div>
-                <div class="emoji-item" style="--i:2">🌸</div>
-                <div class="emoji-item" style="--i:3">✨</div>
-                <div class="emoji-item" style="--i:4">💕</div>
-                <div class="emoji-item" style="--i:5">🌟</div>
-                <div class="emoji-item" style="--i:6">🦋</div>
-                <div class="emoji-item" style="--i:7">💖</div>
+            <!-- Emoji ring wrapper: JS parallax goes on px-ring, rotateRing stays on inner -->
+            <div class="px-layer px-ring">
+                <div class="emoji-ring">
+                    <div class="emoji-item" style="--i:0">🌹</div>
+                    <div class="emoji-item" style="--i:1">💎</div>
+                    <div class="emoji-item" style="--i:2">🌸</div>
+                    <div class="emoji-item" style="--i:3">✨</div>
+                    <div class="emoji-item" style="--i:4">💕</div>
+                    <div class="emoji-item" style="--i:5">🌟</div>
+                    <div class="emoji-item" style="--i:6">🦋</div>
+                    <div class="emoji-item" style="--i:7">💖</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PHOTO PARALLAX SECTION ===== -->
+        <section class="photo-parallax-section">
+            <!-- CSS parallax background layer (the photo) -->
+            <div class="photo-parallax-bg" id="photoBg"></div>
+
+            <!-- Dark overlay gradient -->
+            <div class="photo-parallax-overlay"></div>
+
+            <!-- Floating hearts over photo -->
+            <div class="photo-hearts" aria-hidden="true">
+                <span class="ph-heart" style="--d:0s;   --x:15%;  --s:1.0">💗</span>
+                <span class="ph-heart" style="--d:0.5s; --x:80%;  --s:0.7">💖</span>
+                <span class="ph-heart" style="--d:1.2s; --x:50%;  --s:1.2">💕</span>
+                <span class="ph-heart" style="--d:0.8s; --x:30%;  --s:0.8">🌸</span>
+                <span class="ph-heart" style="--d:1.8s; --x:65%;  --s:0.9">✨</span>
+                <span class="ph-heart" style="--d:2.2s; --x:88%;  --s:1.1">💗</span>
+            </div>
+
+            <!-- Portrait card -->
+            <div class="photo-card reveal-item">
+                <div class="photo-card-glow"></div>
+                <div class="photo-card-border">
+                    <img src="parallax.jpg" alt="My Jebu 👑" class="photo-portrait" />
+                </div>
+                <div class="photo-caption">
+                    <span class="photo-heart-icon">💖</span>
+                    <p class="photo-name">I Love You Jebin</p>
+                    <p class="photo-tagline">The one who lights up my world ✨</p>
+                </div>
             </div>
         </section>
 
         <!-- ===== CAKE SECTION ===== -->
+
         <section class="cake-section">
             <div class="section-header reveal-item">
                 <span class="section-tag">🎂 Make A Wish</span>
@@ -100,7 +147,7 @@
             </div>
 
             <div class="cake-wrapper reveal-item">
-                <div class="cake-scene">
+                <div class="cake-scene parallax-float">
                     <!-- Candles -->
                     <div class="candles-row">
                         <div class="candle c1">
@@ -155,7 +202,7 @@
         <section class="message-section">
             <div class="msg-bg-overlay"></div>
             <div class="message-container">
-                <div class="letter-wrapper reveal-item">
+                <div class="letter-wrapper reveal-item parallax-float">
                     <div class="letter-top">
                         <span>💌</span>
                         <h2>A Letter From My Heart</h2>
@@ -296,7 +343,7 @@
 
         <!-- ===== FOOTER ===== -->
         <footer class="site-footer">
-            <p>Made with 💖 especially for you, My Love 👑</p>
+            <p>Made with 💖 especially for you, My Love Jebu👑</p>
             <p class="footer-sub">✨ Every pixel crafted with love ✨</p>
         </footer>
 
